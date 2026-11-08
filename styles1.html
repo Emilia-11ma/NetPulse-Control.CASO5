@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPulse Control | Gestión de Internet</title>
+
+<style>
+:root {
+    --fondo: #f1f5fb;
+    --tarjeta: #ffffff;
+    --texto: #17233d;
+    --secundario: #718096;
+    --borde: #dce5f2;
+    --azul: #2563eb;
+    --celeste: #0891b2;
+    --verde: #16805d;
+    --amarillo: #b7791f;
+    --rojo: #dc3545;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: radial-gradient(circle at top left, #dceafe, transparent 35%), var(--fondo);
+    color: var(--texto);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 28px;
+}
+
+h1, h2, p { margin-top: 0; }
+
+h1 {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 17px;
+    font-weight: 750;
+    margin-bottom: 16px;
+}
+
+.sub {
+    color: var(--secundario);
+    margin-bottom: 16px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+}
+
+.brand-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--azul), var(--celeste));
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 27px;
+    font-weight: 800;
+    box-shadow: 0 8px 22px #2563eb35;
+}
+
+.brand-name {
+    color: var(--azul);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.brand-desc {
+    color: var(--secundario);
+    font-size: 12px;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 32px;
+    border-radius: 22px;
+    background: linear-gradient(120deg, #101d3a, #17427f 65%, #087eaa);
+    color: white;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 35px #163b7020;
+}
+
+.hero::after {
+    content: "〰";
+    position: absolute;
+    right: 22px;
+    bottom: -48px;
+    font-size: 180px;
+    color: #ffffff0d;
+    pointer-events: none;
+}
+
+.eyebrow {
+    color: #a9d8ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.slogan {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.hero-text {
+    color: #d8e8ff;
+    max-width: 650px;
+    margin-bottom: 18px;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #ffffff40;
+    border-radius: 50px;
+    font-size: 12px;
+    color: #e2f2ff;
+}
+
+.card {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 5px 20px #1a376308;
+    min-width: 0;
+}
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 5px 20px #1a376308;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: var(--azul);
+    left: 0;
+    top: 0;
+}
+
+.stat-card:nth-child(2)::after { background: var(--verde); }
+.stat-card:nth-child(3)::after { background: var(--rojo); }
+.stat-card:nth-child(4)::after { background: var(--celeste); }
+
+.k {
+    font-size: 12px;
+    font-weight: 650;
+    color: var(--secundario);
+}
+
+.v {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-top: 5px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+button, input, select { font: inherit; }
+
+button {
+    border: 1px solid var(--borde);
+    background: white;
+    color: var(--texto);
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: all .18s ease;
+}
+
+button:hover {
+    border-color: var(--azul);
+    color: var(--azul);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 13px #2563eb12;
+}
+
+button.p {
+    background: linear-gradient(135deg, var(--azul), var(--celeste));
+    border-color: transparent;
+    color: white;
+}
+
+button.p:hover {
+    color: white;
+    box-shadow: 0 7px 17px #2563eb35;
+}
+
+input, select {
+    min-width: 0;
+    flex: 1 1 145px;
+    padding: 10px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: #f8faff;
+    color: var(--texto);
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px #2563eb15;
+}
+
+.tw {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--borde);
+    white-space: nowrap;
+}
+
+th {
+    background: #f5f8fe;
+    color: var(--secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 800;
+}
+
+tbody tr:hover { background: #f5f8ff; }
+
+.b {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 750;
+    border: 1px solid currentColor;
+}
+
+.activo, .pagada { color: var(--verde); }
+.pendiente { color: var(--amarillo); }
+.vencida, .suspendido { color: var(--rojo); }
+
+#msg, .m {
+    min-height: 20px;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.err { color: var(--rojo); }
+.okk { color: var(--verde); }
+
+.log {
+    max-height: 200px;
+    overflow: auto;
+    padding: 14px;
+    background: #f5f8fe;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    font: 12px/1.8 Consolas, monospace;
+    color: var(--secundario);
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 10px;
+    color: var(--secundario);
+    font-size: 12px;
+}
+
+.footer strong { color: var(--azul); }
+
+@media (max-width: 600px) {
+    main { padding: 13px; }
+    .hero { padding: 23px 19px; border-radius: 17px; }
+    .hero h1 { font-size: 29px; }
+    .slogan { font-size: 16px; }
+    .card { padding: 15px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .stat-card { padding: 15px; }
+    .v { font-size: 23px; }
+    .row button { flex: 1 1 auto; }
+}
+</style>
+</head>
+
+<body>
+<main>
+
+    <div class="brand">
+        <div class="brand-icon">N</div>
+        <div>
+            <div class="brand-name">NetPulse Control</div>
+            <div class="brand-desc">Gestión inteligente de conectividad</div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="eyebrow">Plataforma de gestión ISP</div>
+        <h1>NetPulse Control</h1>
+        <p class="slogan">“Conectamos tu mundo, activamos tu futuro.”</p>
+        <p class="hero-text">
+            Administra clientes, contratos, facturación y pagos desde un solo lugar.
+            Controla la suspensión y reactivación del servicio de internet.
+        </p>
+        <span class="hero-tag">● Panel de administración · Conectado a MySQL</span>
+    </section>
+
+    <div class="card">
+        <h2>⏱ Reloj de simulación</h2>
+        <div class="row">
+            <strong id="reloj">Cargando...</strong>
+            <button type="button" data-t="1">+1 hora</button>
+            <button type="button" data-t="24">+24 horas</button>
+            <button type="button" data-t="72">+3 días</button>
+            <button type="button" data-act="reset">Reiniciar demo</button>
+        </div>
+        <p class="sub" style="margin:10px 0 0">
+            Simula el paso del tiempo para comprobar los vencimientos y las
+            suspensiones de los contratos.
+        </p>
+        <div id="msgreloj" class="m"></div>
+    </div>
+
+    <div class="grid" id="res"></div>
+
+    <!-- CLIENTES -->
+    <div class="card">
+        <h2>👥 Gestión de clientes</h2>
+
+        <div class="tw">
+            <table id="tcl"></table>
+        </div>
+
+        <form id="fcl" class="row" style="margin-top:15px">
+            <input name="nombre" placeholder="Nombre del cliente" required>
+            <input name="cedula" placeholder="Cédula" required
+                   inputmode="numeric" maxlength="10" pattern="[0-9]{10}">
+            <input name="telefono" placeholder="Teléfono">
+            <input name="correo" type="email" placeholder="Correo electrónico">
+            <input name="direccion" placeholder="Dirección">
+            <button class="p" type="submit">+ Agregar cliente</button>
+        </form>
+
+        <div id="msgcl" class="m"></div>
+
+        <!-- NUEVA OPCIÓN: CLIENTES ELIMINADOS -->
+        <div class="row" style="margin-top:15px">
+            <button type="button" id="btnVerEliminados">
+                Ver clientes eliminados
+            </button>
+        </div>
+
+        <div id="seccionEliminados" hidden style="margin-top:20px">
+            <h2>♻ Clientes eliminados</h2>
+
+            <div class="tw">
+                <table id="tel"></table>
+            </div>
+
+            <div id="msgel" class="m"></div>
+        </div>
+    </div>
+
+    <!-- CONTRATOS -->
+    <div class="card">
+        <h2>📡 Contratos y servicios</h2>
+        <div class="tw">
+            <table id="tc"></table>
+        </div>
+
+        <form id="fc" class="row" style="margin-top:15px">
+            <select name="cid" required>
+                <option value="">Seleccionar cliente</option>
+            </select>
+            <select name="plan" required>
+                <option value="">Seleccionar plan</option>
+            </select>
+            <input name="ip"
+                   placeholder="Ejemplo: 192.168.1.10"
+                   title="Ingresa una IP válida. Ejemplo: 192.168.1.10"
+                   required>
+            <button class="p" type="submit">+ Agregar contrato</button>
+        </form>
+        <div id="msgc" class="m"></div>
+    </div>
+
+    <!-- FACTURACIÓN -->
+    <div class="card">
+        <h2>🧾 Facturación</h2>
+        <div class="tw">
+            <table id="tf"></table>
+        </div>
+
+        <form id="ff" class="row" style="margin-top:15px">
+            <select name="kid" required>
+                <option value="">Seleccionar contrato</option>
+            </select>
+            <input name="valor" type="number" step="0.01" min="0.01"
+                   placeholder="Valor a facturar" required>
+            <button class="p" type="submit">Crear factura</button>
+        </form>
+        <div id="msgf" class="m"></div>
+    </div>
+
+    <!-- PAGOS -->
+    <div class="card">
+        <h2>💳 Registro de pagos</h2>
+        <form id="fp" class="row">
+            <select name="fid" required>
+                <option value="">Seleccionar factura</option>
+            </select>
+            <input name="valor" type="number" step="0.01" min="0.01"
+                   placeholder="Valor del pago" required>
+            <input name="ref" placeholder="Referencia de transacción" required>
+            <button class="p" type="submit">Registrar pago</button>
+        </form>
+        <div id="msg"></div>
+
+        <div class="tw" style="margin-top:15px">
+            <table id="tp"></table>
+        </div>
+    </div>
+
+    <!-- ROUTER -->
+    <div class="card">
+        <h2>🔌 Estado de conexión y señales al router</h2>
+        <p class="sub">
+            Direcciones IP suspendidas:
+            <strong id="cort">Cargando...</strong>
+        </p>
+        <div class="log" id="log"></div>
+    </div>
+
+    <!-- MOROSOS -->
+    <div class="card">
+        <h2>⚠ Reporte de clientes morosos</h2>
+        <div class="tw">
+            <table id="tm"></table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <strong>NetPulse Control</strong> · Gestión inteligente de internet
+        <br>
+        Conectamos tu mundo, activamos tu futuro.
+    </footer>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let S = {
+    clientes: [],
+    clientesEliminados: [],
+    planes: [],
+    contratos: [],
+    facturas: [],
+    pagos: [],
+    historial: [],
+    horas: 0
+};
+
+const esc = valor => String(valor ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+}[c]));
+
+const dinero = valor =>
+    "$" + Number(valor || 0).toFixed(2);
+
+const fecha = valor => {
+    if (!valor) return "—";
+
+    const d = new Date(valor);
+    if (isNaN(d.getTime())) return valor;
+
+    return d.toLocaleString("es-EC", {
+        dateStyle: "short",
+        timeStyle: "short"
+    });
+};
+
+const saldo = f =>
+    Math.max(0, Number(f.total) - Number(f.pagado || 0));
+
+const cliente = id =>
+    S.clientes.find(c => Number(c.id_cliente) === Number(id));
+
+const contrato = id =>
+    S.contratos.find(c => Number(c.id_contrato) === Number(id));
+
+const plan = id =>
+    S.planes.find(p => Number(p.id_plan) === Number(id));
+
+function mostrarMensaje(id, texto, correcto = true) {
+    const elemento = $(id);
+    elemento.textContent = texto;
+    elemento.className = correcto ? "m okk" : "m err";
+}
+
+async function api(url, metodo = "GET", datos = null) {
+    const opciones = {
+        method: metodo,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+
+    if (datos !== null) {
+        opciones.body = JSON.stringify(datos);
+    }
+
+    const respuesta = await fetch(url, opciones);
+    const resultado = await respuesta.json();
+
+    if (!respuesta.ok) {
+        throw new Error(
+            resultado.error || resultado.mensaje ||
+            "Ocurrió un error en el servidor."
+        );
+    }
+
+    return resultado;
+}
+
+function llenarSelect(select, opciones, textoInicial) {
+    const valorAnterior = select.value;
+
+    select.innerHTML =
+        `<option value="">${esc(textoInicial)}</option>` +
+        opciones.map(op => `
+            <option value="${op.value}">${esc(op.texto)}</option>
+        `).join("");
+
+    if ([...select.options].some(o => o.value === valorAnterior)) {
+        select.value = valorAnterior;
+    }
+}
+
+function obtenerEstadoFactura(f) {
+    if (saldo(f) <= 0) return "pagada";
+
+    const vencimiento = new Date(
+        f.fecha_vencimiento_exacta ||
+        (f.fecha_vencimiento + "T23:59:59")
+    );
+
+    const limite = vencimiento.getTime() + 24 * 60 * 60 * 1000;
+
+    return Date.now() + S.horas * 3600000 > limite
+        ? "vencida"
+        : "pendiente";
+}
+
+function render() {
+    const suspendidos = S.contratos.filter(
+        c => String(c.estado).toLowerCase() === "suspendido"
+    );
+
+    const deuda = S.facturas.reduce((s, f) => s + saldo(f), 0);
+
+    $("res").innerHTML = [
+        ["Clientes registrados", S.clientes.length],
+        ["Contratos activos", S.contratos.length - suspendidos.length],
+        ["Contratos suspendidos", suspendidos.length],
+        ["Deuda total", dinero(deuda)]
+    ].map(([titulo, valor]) => `
+        <div class="stat-card">
+            <div class="k">${titulo}</div>
+            <div class="v">${valor}</div>
+        </div>
+    `).join("");
+
+    // CLIENTES
+    $("tcl").innerHTML = `
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Cédula</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Contratos</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${S.clientes.map((c, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${esc(c.nombre)}</td>
+                    <td>${esc(c.cedula)}</td>
+                    <td>${esc(c.telefono)}</td>
+                    <td>${esc(c.correo)}</td>
+                    <td>${esc(c.direccion)}</td>
+                    <td>
+                        ${S.contratos.filter(k =>
+                            Number(k.id_cliente) === Number(c.id_cliente)
+                        ).length}
+                    </td>
+                    <td>
+                        <button type="button"
+                                data-eliminar-cliente="${c.id_cliente}">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `).join("") || `
+                <tr>
+                    <td colspan="8">No hay clientes registrados.</td>
+                </tr>
+            `}
+        </tbody>
+    `;
+
+    // CLIENTES ELIMINADOS
+    $("tel").innerHTML = `
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Cédula</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${S.clientesEliminados.map(c => `
+                <tr>
+                    <td>${c.id_cliente}</td>
+                    <td>${esc(c.nombre)}</td>
+                    <td>${esc(c.cedula)}</td>
+                    <td>${esc(c.telefono)}</td>
+                    <td>${esc(c.correo)}</td>
+                    <td>${esc(c.direccion)}</td>
+                    <td>
+                        <button type="button"
+                                class="p"
+                                data-restaurar-cliente="${c.id_cliente}">
+                            Volver a ingresar
+                        </button>
+                    </td>
+                </tr>
+            `).join("") || `
+                <tr>
+                    <td colspan="7">No hay clientes eliminados.</td>
+                </tr>
+            `}
+        </tbody>
+    `;
+
+    // CONTRATOS
+    $("tc").innerHTML = `
+        <thead>
+            <tr>
+                <th>Contrato</th>
+                <th>Cliente</th>
+                <th>Plan</th>
+                <th>IP</th>
+                <th>Fecha de inicio</th>
+                <th>Servicio</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${S.contratos.map(k => `
+                <tr>
+                    <td>${k.id_contrato}</td>
+                    <td>${esc(k.nombre_cliente)}</td>
+                    <td>${esc(k.nombre_plan)} · ${dinero(k.precio)}</td>
+                    <td>${esc(k.ip_cliente)}</td>
+                    <td>${fecha(k.fecha_inicio)}</td>
+                    <td>
+                        <span class="b ${String(k.estado).toLowerCase()}">
+                            ${esc(k.estado)}
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" data-fact="${k.id_contrato}">
+                            Generar factura
+                        </button>
+                        <button type="button"
+                                data-eliminar-contrato="${k.id_contrato}">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `).join("") || `
+                <tr><td colspan="7">No hay contratos registrados.</td></tr>
+            `}
+        </tbody>
+    `;
+
+    // FACTURAS
+    $("tf").innerHTML = `
+        <thead>
+            <tr>
+                <th>N.º</th>
+                <th>Contrato</th>
+                <th>Cliente</th>
+                <th>Plan</th>
+                <th>Emisión</th>
+                <th>Vence</th>
+                <th>Gracia hasta</th>
+                <th>Valor</th>
+                <th>Saldo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${S.facturas.map(f => {
+                const vencimiento = new Date(
+                    f.fecha_vencimiento_exacta ||
+                    (f.fecha_vencimiento + "T23:59:59")
+                );
+                const gracia = new Date(vencimiento.getTime() + 86400000);
+                const estado = obtenerEstadoFactura(f);
+
+                return `
+                    <tr>
+                        <td>${f.id_factura}</td>
+                        <td>${f.id_contrato}</td>
+                        <td>${esc(f.nombre_cliente)}</td>
+                        <td>${esc(f.nombre_plan)}</td>
+                        <td>${fecha(f.fecha_emision)}</td>
+                        <td>${fecha(f.fecha_vencimiento_exacta || f.fecha_vencimiento)}</td>
+                        <td>${fecha(gracia.toISOString())}</td>
+                        <td>${dinero(f.total)}</td>
+                        <td>${dinero(saldo(f))}</td>
+                        <td><span class="b ${estado}">${estado}</span></td>
+                    </tr>
+                `;
+            }).join("") || `
+                <tr><td colspan="10">No hay facturas registradas.</td></tr>
+            `}
+        </tbody>
+    `;
+
+    // PAGOS
+    $("tp").innerHTML = `
+        <thead>
+            <tr>
+                <th>N.º pago</th>
+                <th>Factura</th>
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>Referencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${S.pagos.map(p => `
+                <tr>
+                    <td>${p.id_pago}</td>
+                    <td>${p.id_factura}</td>
+                    <td>${fecha(p.fecha_pago)}</td>
+                    <td>${dinero(p.valor)}</td>
+                    <td>${esc(p.referencia)}</td>
+                </tr>
+            `).join("") || `
+                <tr><td colspan="5">No hay pagos registrados.</td></tr>
+            `}
+        </tbody>
+    `;
+
+    // SELECTS
+    llenarSelect(
+        $("fc").cid,
+        S.clientes.map(c => ({
+            value: c.id_cliente,
+            texto: `${c.nombre} · ${c.cedula}`
+        })),
+        "Seleccionar cliente"
+    );
+
+    llenarSelect(
+        $("fc").plan,
+        S.planes.map(p => ({
+            value: p.id_plan,
+            texto: `${p.nombre} · ${dinero(p.precio)}`
+        })),
+        "Seleccionar plan"
+    );
+
+    llenarSelect(
+        $("ff").kid,
+        S.contratos.map(k => ({
+            value: k.id_contrato,
+            texto: `Contrato ${k.id_contrato} · ${k.nombre_cliente} · ${k.nombre_plan}`
+        })),
+        "Seleccionar contrato"
+    );
+
+    llenarSelect(
+        $("fp").fid,
+        S.facturas.filter(f => saldo(f) > 0).map(f => ({
+            value: f.id_factura,
+            texto: `Factura ${f.id_factura} · ${f.nombre_cliente} · Saldo ${dinero(saldo(f))}`
+        })),
+        "Seleccionar factura pendiente"
+    );
+
+    // IP SUSPENDIDAS
+    $("cort").textContent =
+        suspendidos.map(k => k.ip_cliente).join(", ") || "Ninguna";
+
+    // HISTORIAL
+    $("log").textContent = S.historial.map(h =>
+        `${fecha(h.fecha)} — ${h.accion} — ${h.nombre_cliente} (${h.ip_cliente}) — ${h.motivo}`
+    ).join("\n") || "Sin señales todavía.";
+
+    // MOROSOS
+    $("tm").innerHTML = `
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Contrato</th>
+                <th>IP</th>
+                <th>Deuda del contrato</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${suspendidos.map(k => {
+                const deudaContrato = S.facturas
+                    .filter(f => Number(f.id_contrato) === Number(k.id_contrato))
+                    .reduce((s, f) => s + saldo(f), 0);
+
+                return `
+                    <tr>
+                        <td>${esc(k.nombre_cliente)}</td>
+                        <td>${k.id_contrato}</td>
+                        <td>${esc(k.ip_cliente)}</td>
+                        <td>${dinero(deudaContrato)}</td>
+                        <td><span class="b suspendido">Suspendido</span></td>
+                    </tr>
+                `;
+            }).join("") || `
+                <tr><td colspan="5">No hay contratos suspendidos.</td></tr>
+            `}
+        </tbody>
+    `;
+}
+
+// CARGAR CLIENTES ELIMINADOS
+async function cargarClientesEliminados() {
+    try {
+        S.clientesEliminados = await api("/api/clientes/eliminados");
+        render();
+    } catch (error) {
+        mostrarMensaje("msgel", error.message, false);
+    }
+}
+
+async function cargarTodo() {
+    try {
+        const resultados = await Promise.all([
+            api("/api/clientes"),
+            api("/api/planes"),
+            api("/api/contratos"),
+            api("/api/facturas"),
+            api("/api/pagos"),
+            api("/api/historial-red"),
+            api("/api/simulacion")
+        ]);
+
+        S.clientes = resultados[0];
+        S.planes = resultados[1];
+        S.contratos = resultados[2];
+        S.facturas = resultados[3];
+        S.pagos = resultados[4];
+        S.historial = resultados[5];
+        S.horas = Number(resultados[6].horas || 0);
+
+        $("reloj").textContent = fecha(resultados[6].fecha);
+
+        render();
+
+    } catch (error) {
+        console.error(error);
+        $("log").textContent = "Error de conexión: " + error.message;
+        mostrarMensaje("msg", error.message, false);
+    }
+}
+
+// MOSTRAR / OCULTAR CLIENTES ELIMINADOS
+$("btnVerEliminados").addEventListener("click", async () => {
+    const seccion = $("seccionEliminados");
+    const estaOculta = seccion.hidden;
+
+    seccion.hidden = !estaOculta;
+
+    if (estaOculta) {
+        $("btnVerEliminados").textContent = "Ocultar clientes eliminados";
+        await cargarClientesEliminados();
+    } else {
+        $("btnVerEliminados").textContent = "Ver clientes eliminados";
+    }
+});
+
+// REGISTRAR CLIENTE
+$("fcl").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const formulario = e.target;
+    const datos = Object.fromEntries(new FormData(formulario).entries());
+
+    try {
+        await api("/api/clientes", "POST", datos);
+
+        formulario.reset();
+        mostrarMensaje("msgcl", "Cliente guardado correctamente en MySQL.");
+        await cargarTodo();
+
+    } catch (error) {
+        mostrarMensaje("msgcl", error.message, false);
+    }
+});
+
+// REGISTRAR CONTRATO
+$("fc").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const formulario = e.target;
+    const datos = new FormData(formulario);
+
+    const cuerpo = {
+        id_cliente: Number(datos.get("cid")),
+        id_plan: Number(datos.get("plan")),
+        ip_cliente: datos.get("ip").trim()
+    };
+
+    try {
+        await api("/api/contratos", "POST", cuerpo);
+
+        formulario.reset();
+        mostrarMensaje("msgc", "Contrato guardado correctamente en MySQL.");
+        await cargarTodo();
+
+    } catch (error) {
+        mostrarMensaje("msgc", error.message, false);
+    }
+});
+
+// CREAR FACTURA
+async function generarFactura(idContrato, valor) {
+    return api("/api/facturas", "POST", {
+        id_contrato: Number(idContrato),
+        valor: Number(valor)
+    });
+}
+
+$("ff").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const datos = new FormData(e.target);
+
+    try {
+        await generarFactura(datos.get("kid"), datos.get("valor"));
+
+        e.target.reset();
+        mostrarMensaje("msgf", "Factura guardada correctamente en MySQL.");
+        await cargarTodo();
+
+    } catch (error) {
+        mostrarMensaje("msgf", error.message, false);
+    }
+});
+
+// BOTONES DE LAS TABLAS Y RELOJ
+document.addEventListener("click", async e => {
+
+    // RESTAURAR CLIENTE
+    const botonRestaurar = e.target.closest("[data-restaurar-cliente]");
+
+    if (botonRestaurar) {
+        const id = Number(botonRestaurar.dataset.restaurarCliente);
+
+        const confirmar = confirm(
+            "¿Deseas volver a ingresar este cliente? Se conservarán sus registros anteriores."
+        );
+
+        if (!confirmar) return;
+
+        try {
+            const resultado = await api(
+                `/api/clientes/${id}/restaurar`,
+                "POST"
+            );
+
+            mostrarMensaje("msgcl", resultado.mensaje || "Cliente restaurado correctamente.");
+            await cargarTodo();
+            await cargarClientesEliminados();
+
+        } catch (error) {
+            mostrarMensaje("msgel", error.message, false);
+        }
+
+        return;
+    }
+
+    // ELIMINAR CLIENTE
+    const botonEliminarCliente = e.target.closest("[data-eliminar-cliente]");
+
+    if (botonEliminarCliente) {
+        const id = Number(botonEliminarCliente.dataset.eliminarCliente);
+
+        const confirmar = confirm(
+            "¿Estás segura de que deseas eliminar este cliente?"
+        );
+
+        if (!confirmar) return;
+
+        try {
+            const resultado = await api(
+                `/api/clientes/${id}`,
+                "DELETE"
+            );
+
+            mostrarMensaje("msgcl", resultado.mensaje);
+            await cargarTodo();
+
+            if (!$("seccionEliminados").hidden) {
+                await cargarClientesEliminados();
+            }
+
+        } catch (error) {
+            mostrarMensaje("msgcl", error.message, false);
+        }
+
+        return;
+    }
+
+    // ELIMINAR CONTRATO
+    const botonEliminarContrato = e.target.closest("[data-eliminar-contrato]");
+
+    if (botonEliminarContrato) {
+        const id = Number(botonEliminarContrato.dataset.eliminarContrato);
+
+        const confirmar = confirm(
+            "¿Deseas eliminar este contrato? Sus facturas, pagos e historial se conservarán. No podrás eliminarlo si tiene facturas pendientes."
+        );
+
+        if (!confirmar) return;
+
+        try {
+            const resultado = await api(
+                `/api/contratos/${id}`,
+                "DELETE"
+            );
+
+            mostrarMensaje("msgc", resultado.mensaje);
+            await cargarTodo();
+
+        } catch (error) {
+            mostrarMensaje("msgc", error.message, false);
+        }
+
+        return;
+    }
+
+    // GENERAR FACTURA DESDE LA TABLA
+    const botonFactura = e.target.closest("[data-fact]");
+
+    if (botonFactura) {
+        const id = Number(botonFactura.dataset.fact);
+        const k = contrato(id);
+
+        if (!k) return;
+
+        try {
+            await generarFactura(id, k.precio);
+            mostrarMensaje("msgf", "Factura generada correctamente.");
+            await cargarTodo();
+
+        } catch (error) {
+            mostrarMensaje("msgf", error.message, false);
+        }
+
+        return;
+    }
+
+    // AVANZAR TIEMPO
+    const botonTiempo = e.target.closest("[data-t]");
+
+    if (botonTiempo) {
+        try {
+            await api("/api/simulacion", "POST", {
+                accion: "avanzar",
+                horas: Number(botonTiempo.dataset.t)
+            });
+
+            mostrarMensaje("msgreloj", "Tiempo de simulación actualizado.");
+            await cargarTodo();
+
+        } catch (error) {
+            mostrarMensaje("msgreloj", error.message, false);
+        }
+
+        return;
+    }
+
+    // REINICIAR RELOJ
+    const botonReset = e.target.closest("[data-act='reset']");
+
+    if (botonReset) {
+        const confirmar = confirm(
+            "¿Deseas reiniciar el reloj de simulación? Los clientes, contratos, facturas y pagos NO se borrarán."
+        );
+
+        if (!confirmar) return;
+
+        try {
+            await api("/api/simulacion", "POST", {
+                accion: "reiniciar"
+            });
+
+            mostrarMensaje(
+                "msgreloj",
+                "Reloj reiniciado. Los datos de MySQL se conservaron."
+            );
+
+            await cargarTodo();
+
+        } catch (error) {
+            mostrarMensaje("msgreloj", error.message, false);
+        }
+    }
+});
+
+// REGISTRAR PAGO
+$("fp").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const datos = new FormData(e.target);
+
+    try {
+        await api("/api/pagos", "POST", {
+            id_factura: Number(datos.get("fid")),
+            valor: Number(datos.get("valor")),
+            referencia: datos.get("ref").trim()
+        });
+
+        e.target.reset();
+        mostrarMensaje("msg", "Pago guardado correctamente en MySQL.");
+        await cargarTodo();
+
+    } catch (error) {
+        mostrarMensaje("msg", error.message, false);
+    }
+});
+
+// AL CAMBIAR FACTURA, MOSTRAR EL SALDO
+$("fp").fid.addEventListener("change", () => {
+    const id = Number($("fp").fid.value);
+    const factura = S.facturas.find(
+        f => Number(f.id_factura) === id
+    );
+
+    if (factura) {
+        $("fp").valor.value = saldo(factura).toFixed(2);
+    }
+});
+
+// COMPROBAR ESTADOS PERIÓDICAMENTE
+async function comprobarEstados() {
+    try {
+        await api("/api/evaluar", "POST");
+        await cargarTodo();
+    } catch (error) {
+        console.error("Error comprobando estados:", error);
+    }
+}
+
+// INICIO
+cargarTodo();
+setInterval(comprobarEstados, 15000);
+</script>
+</body>
+</html>
